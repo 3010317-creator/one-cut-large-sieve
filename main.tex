@@ -1,0 +1,812 @@
+\documentclass[reqno,a4paper,11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[hidelinks]{hyperref}
+\setlength{\textwidth}{150mm}
+\setlength{\textheight}{206mm}
+\setlength{\oddsidemargin}{5mm}
+\setlength{\evensidemargin}{5mm}
+\setlength{\emergencystretch}{2em}
+\allowdisplaybreaks[2]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\input{author_details.tex}
+\begin{document}
+\title[One-cut large-sieve proof]{A One-Cut Large-Sieve Proof of a Quasi-Riemann Zero-Free Region}
+\ifx\PaperAuthor\empty\else\author{\PaperAuthor}\fi
+\ifx\PaperAffiliation\empty\else\address{\PaperAffiliation}\fi
+\ifx\PaperEmail\empty\else\email{\PaperEmail}\fi
+\subjclass[2020]{Primary 11M06, 11M26; Secondary 11L40, 11N35}
+\keywords{Dirichlet $L$-functions, zero-free half-plane, sextic large sieve,
+cubic theta functions, mean-square estimates, M\"obius inversion}
+\begin{abstract}
+We prove by a simple one-cut argument that Dirichlet $L$-functions and finite-order Hecke $L$-functions over $\mathbb{Q}(\omega)$ have no zeros in the half-plane $\Re s>47/48$. The boundary is independent of the character, its conductor and the height, so the theorem also disposes of Siegel zeros: an exceptional real zero would have to lie in this half-plane. The argument concerns the passage from a completed cubic-theta sum to the original character sums. We invert the cubic completion exactly and split the inverse sum once: the completed estimate controls one part, while the sextic large sieve controls all smaller scales in the other. No transfer argument and no recursive descent are needed; the outcome is the dual mean-square bound $\mathcal{E}(h,X,F)\ll_{\varepsilon}D^{\varepsilon}(XF+h^{7/6})$. We give the Poisson reduction and the treatment of coupled smooth weights explicitly, and show how sixth-power amplification produces the exponent $47/48$. An abstract truncation lemma identifies $5/4$ as the threshold for the short-scale exponent in this method.
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+
+A quasi-Riemann zero-free statement asserts that an $L$-function has no zeros for $\Re s>1-\delta$, with some fixed $\delta>0$. In this paper we prove such a statement by a simple method. The main estimate concerns cancellation in averages of character sums; an analytic continuation argument then converts that cancellation into a zero-free half-plane.
+
+For a Dirichlet character $\chi$, the series $L(s,\chi)=\sum_{m\ge1}\chi(m)m^{-s}$ converges for $\Re s>1$. Its reciprocal has coefficients $\mu(m)\chi(m)$. Cancellation in these coefficients can therefore continue the reciprocal farther to the left, excluding zeros of $L$. We use the analogous relationship for Hecke characters, whose series run over ideals rather than positive integers.
+
+Let $K=\mathbb{Q}(\omega)$, where $\omega=e^{2\pi i/3}$, and put $\mathcal{O}=\mathbb{Z}[\omega]$. We prove the following theorem.
+
+\begin{theorem}\label{thm:main}
+
+Every finite-order Hecke $L$-function over $K$ has no zeros in the half-plane $\Re s>47/48$. The principal-character $L$-function has its usual simple pole at $s=1$. In particular, for every Dirichlet character $\chi $,
+
+\begin{equation}\label{eq:1}
+L\left( s,\chi \right) \ne 0\quad \quad \left( \Re s>47/48\right) 
+\end{equation}
+
+\end{theorem}
+
+The half-plane $\Re s>11/12$ is obtained in \cite[Theorem 1.1]{theta}, and $\Re s>47/48$ in \cite[Theorem 1]{kintali}. The proof given here replaces the transfer and recursive descent in \cite[Section 5]{theta} by exact inversion, one truncation, and the sextic large sieve; at the level of the mean-square estimate it is a comparatively simple argument, a single cut with no recursion. Since the boundary $47/48$ depends neither on the character, nor on the conductor, nor on the height, Theorem 1.1 also excludes Siegel zeros.
+
+The obstacle is that the available theta estimate controls a completed sum, which combines the desired character sum with copies at smaller scales. An upper bound for this combination does not by itself bound any one copy, because different copies may cancel. Exact Möbius inversion expresses the original sum in terms of the completed sums. We then separate the inverse sum according to the size of its cubic divisor.
+
+There are two estimates available. The completed cubic-theta bound \cite[Proposition 5.2]{theta} is effective at scales at least as large as the row range $h$. The fixed-order large sieve \cite[Theorem 1.1]{defaveri} bounds every smaller scale directly. When $X>h$, the single cutoff $\mathrm{N}b=(X/h)^{1/3}$ puts each term on the appropriate side of these estimates. The large sieve is uniform over the whole short-scale interval, so the smaller sums do not have to be fed back into the argument. This gives
+
+\begin{equation}\label{eq:2}
+\mathcal{E}\left( h,X,F\right) {\ll }_{\varepsilon }{D}^{\varepsilon }\left( XF+{h}^{7/6}\right) .
+\end{equation}
+
+Here $h$ measures the range of the row variable, $X$ the length of the inner character sum, and $F$ the range of an auxiliary twist. The normalized energy $\mathcal{E}$ averages the squared size of these sums. When $h^{7/6}\le XF$, \eqref{eq:2} is of size $XF$, which is the estimate needed after Poisson summation.
+
+Sections 2 and 3 introduce this energy and prove the uniform short-scale bound. Sections 4 and 5 give the exact inversion and the single-cut argument. Section 6 explains the exponent threshold. Sections 7 and 8 connect the estimate to the original Möbius sums, including the variable changes and smooth weights. Section 9 records the exponent calculation in the amplification, and Section 10 deduces the zero-free region.
+
+Fix $D\ge 2$ and a constant ${C}_{0}\ge 3$. All varying scales are bounded by a fixed power ${D}^{{C}_{0}}$; an enlargement of ${C}_{0}$ accommodates fixed support constants and divisor substitutions. For each compact interval $I\subset (0,\infty )$, test functions belong to ${C}_{c}^{\infty }(I;\mathbb{C})$. We write $A\preccurlyeq B$ for $A{\ll }_{\varepsilon }{D}^{\varepsilon }B$ for every $\varepsilon >0$. The implied constant may depend on ${C}_{0}$, $I$, the fixed character and exceptional primes, and a fixed finite number of derivatives of the test functions. Each estimate holds with a finite smooth norm, uniformly over its stated scales. In finitely many applications, the individual losses are chosen with total at most the prescribed $\varepsilon $.
+
+\section{Notation and the dual mean square}
+
+The ring $\mathcal{O}$ is the lattice of Eisenstein integers. For $z=a+b\omega$ its norm is $\mathrm{N}z=|z|^2=a^2-ab+b^2$. For an integral ideal $\mathfrak{a}$, $\mathrm{N}\mathfrak{a}$ is the number of elements of $\mathcal{O}/\mathfrak{a}$. Unique factorization allows us to work with ideals while writing their generators as elements.
+
+Fix a finite-order Hecke character $\nu$. Let $S$ be a finite set of prime ideals containing the primes above $2$ and $3$ and the primes dividing its conductor. These finitely many primes are excluded throughout. Every ideal prime to $3$ has a unique primary generator, characterized by $n\equiv1\;\mathrm{mod}\;3$. A starred sum runs over squarefree integral ideals prime to $S$, written with these generators. Squarefree means that no prime ideal occurs twice. We write $\mu$ for the ideal Möbius function and $\tau(n)$ for the number of ideal divisors of $n$.
+
+The sextic residue character $\chi_n(k)=(k/n)_6$ is multiplicative in $k$ and in squarefree $n$. At a prime ideal $\mathfrak{p}\notin S$, it is the sixth root of unity congruent to $k^{(\mathrm{N}\mathfrak{p}-1)/6}$ modulo $\mathfrak{p}$ when $k$ is coprime to $\mathfrak{p}$. We extend it by zero at non-coprime arguments. In particular, a sixth power has character value one whenever it is coprime to the modulus.
+
+Poisson summation replaces these residue characters by Gauss sums. We therefore include the normalized cubic Gauss factor in the column coefficient $a_\xi(n)$. The auxiliary character $\xi$ keeps track of finitely many congruence factors coming from reciprocity; it does not introduce a new growing parameter.
+
+We use the following Gauss-sum normalization from \cite[Section 4.1]{theta}.
+
+\begin{equation}\label{eq:3}
+\begin{gathered} \alpha \left( n\right) =\frac{n}{\left| n\right| }, \\ {\gamma }_{2}\left( n\right) =\frac{1}{\sqrt{\mathrm{N}n}}\sum _{x\;\mathrm{mod}\;n} {\chi }_{n}{\left( x\right) }^{2}\exp \left( \frac{4\pi i\,\Im \left( x/n\right) }{\sqrt{3}}\right) , \\ {a}_{\xi }\left( n\right) =\overline{\alpha \left( n\right) }{\gamma }_{2}\left( n\right) \xi \left( n\right) . \end{gathered}
+\end{equation}
+
+Choose a fixed modulus supported on $S$, divisible by the conductor of $\nu$ and large enough for the reciprocity factors used below. Let $\Gamma$ be the associated finite ray class group and let $\xi$ run over its characters. A function on $\Gamma$ can be written as a finite linear combination of these characters. On the starred family, the normalized Gauss sum has absolute value one, and hence $|a_\xi(n)|=1$.
+
+The central quantity is a normalized sum of the squared sizes of character sums. The inner sum has columns $n$ of norm comparable to $X$. Its rows are indexed by a nonzero integer $k$ and a squarefree auxiliary modulus $f$. Squaring first, summing over $k$, and averaging over $f$ measures cancellation across the family, which is what Poisson summation will require. For a smooth compactly supported function $W$, define
+
+\begin{equation}\label{eq:4}
+\mathcal{E}\left( h,X,F\right) =\frac{1}{XF}\sum _{F\le \mathrm{N}f<2F,\,\mathrm{sf}} \sum _{0<\mathrm{N}k\le h} {\left| \sum _{n\,\mathrm{sf}} {a}_{\xi }\left( n\right) {\chi }_{n}\left( k\right) {\chi }_{n}{\left( f\right) }^{4}W\left( \frac{\mathrm{N}n}{X}\right) \right| }^{2}.
+\end{equation}
+
+The factor $1/(XF)$ normalizes the column length and the number of auxiliary twists; there is no division by the number of values of $k$. We often suppress the fixed character $\xi$ and weight $W$ in the notation, writing $\mathcal{E}(h,X,F;\xi,W)$ when they need to be displayed. All starred columns and twists remain prime to $S$. The row variable $k$ ranges over every nonzero Eisenstein integer, including integers with repeated prime factors. These rows all arise in the Poisson formula, so they must all be covered by the large-sieve estimate.
+
+\section{Sextic large sieve and all rows}
+
+The large sieve bounds many character sums simultaneously in terms of the squared norm of their coefficients. Its fixed-order formulation restricts the row ideals to be sixth-power-free, meaning that no prime ideal occurs to exponent six or more. We first remove that restriction, because our eventual Poisson frequencies have no such condition.
+
+The large-sieve estimate in \cite[Theorem 1.1]{defaveri}, specialized to the sextic family over $K$, has the form
+
+\begin{equation}\label{eq:5}
+\begin{gathered} \sum _{\begin{gathered} \mathrm{N}\mathfrak{a}\le A \\ \mathfrak{a}\,\text{sixth-power-free} \end{gathered}} {\left| \sum _{\begin{gathered} \mathrm{N}\mathfrak{n}\le L \\ \mathfrak{n}\,\text{sixth-power-free} \end{gathered}} {\lambda }_{\mathfrak{n}}{\left( \frac{\mathfrak{a}}{\mathfrak{n}}\right) }_{6}\right| }^{2} \\ \quad \quad {\ll }_{\varepsilon }{\left( AL\right) }^{\varepsilon }\left( A+L+{A}^{5/6}{L}^{1/3}+{A}^{1/3}{L}^{5/6}\right) \sum _{\mathfrak{n}} {\left| {\lambda }_{\mathfrak{n}}\right| }^{2}. \end{gathered}
+\end{equation}
+
+The coefficients in \eqref{eq:5} are arbitrary. Both ideal families are prime to $S$, and we may restrict the columns to squarefree ideals. We explain the identification with the Hecke family in \cite[Section 2.3]{defaveri}. Since $\mathcal{O}$ has class number one, choose primary generators $m_E$ for its fixed ideal representatives $E$. In the defining decomposition $(a)=(x)E\mathfrak{g}^6$, let $c$ be a primary generator of the fractional ideal $\mathfrak{g}$. The congruence condition on $x$ makes it primary, so $a=xm_Ec^6$: the possible unit factor is primary and hence one. One can choose $(\mathfrak{g},n)=1$, and then $(c^6/n)_6=1$. Thus the character in \cite{defaveri} is $(a/n)_6$ for coprime indices, and both definitions are zero otherwise. Fixed class restrictions and unit twists cost only a constant.
+
+\begin{lemma}[All-row large sieve]
+
+For arbitrary coefficients ${\lambda }_{n}$ supported on squarefree $n$ with $\mathrm{N}n\le L$,
+
+\begin{equation}\label{eq:6}
+\sum _{0<\mathrm{N}k\le h} {\left| \sum _{n\,\mathrm{sf}} {\lambda }_{n}{\chi }_{n}\left( k\right) \right| }^{2}{\ll }_{\varepsilon }{\left( hL\right) }^{\varepsilon }G\left( h,L\right) \sum _{n} {\left| {\lambda }_{n}\right| }^{2},
+\end{equation}
+
+where
+
+\begin{equation}\label{eq:7}
+G\left( h,L\right) =h+L{h}^{1/6}+{h}^{5/6}{L}^{1/3}+{h}^{1/3}{L}^{5/6}.
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+
+Every nonzero $k$ can be written uniquely as $k=urac^6$, where $u$ is one of the six units, $r$ is supported on the primes of $S$, and $a,c$ are prime to $S$, with $a$ sixth-power-free. No coprimality between $a$ and $c$ is imposed.
+
+To make the decomposition unique, fix generators of the primes in $S$ and choose primary generators outside $S$. At each prime outside $S$, divide the valuation of $k$ by six: its remainder belongs to $a$, and its quotient belongs to $c$. The unit $u$ records the remaining associate. The factors $a$ and $c$ may share a prime, since the remainder and quotient can both be positive. For the squarefree columns,
+
+\[
+{\chi }_{n}\left( k\right) ={\chi }_{n}\left( ur\right) \,{1}_{\left( n,c\right) =1}\,{\chi }_{n}\left( a\right) .
+\]
+
+Fix $u,r,c$. The first two factors can be absorbed into the column coefficients without increasing their squared norm. Apply \eqref{eq:5} to $a$ with $A=h/\left( \mathrm{N}r{\left( \mathrm{N}c\right) }^{6}\right) $. Summing the four terms over $c$ uses, respectively,
+
+\[
+\sum _{c} {\left( \mathrm{N}c\right) }^{-6}<\infty ,\quad \mathrm{card}\{c:\mathrm{N}c\le {\left( h/\mathrm{N}r\right) }^{1/6}\}\ll {\left( h/\mathrm{N}r\right) }^{1/6},
+\]
+
+\[
+\sum _{c} {\left( \mathrm{N}c\right) }^{-5}<\infty ,\quad \quad \sum _{c} {\left( \mathrm{N}c\right) }^{-2}<\infty .
+\]
+
+The corresponding sums over $r$ converge since, for each $\delta >0$,
+
+\[
+\sum _{r:\,\mathrm{supp}r\subseteq S} {\left( \mathrm{N}r\right) }^{-\delta }=\prod _{\mathfrak{p}\in S} {\left( 1-{\left( \mathrm{N}\mathfrak{p}\right) }^{-\delta }\right) }^{-1}<\infty .
+\]
+
+Thus the four terms in the fixed-order sieve give, respectively, $h$, $Lh^{1/6}$, $h^{5/6}L^{1/3}$, and $h^{1/3}L^{5/6}$. The factors supported on $S$ contribute only convergent geometric series.
+
+Summing over $u,r,c$ proves \eqref{eq:6} for the full row range $0<\mathrm{N}k\le h$.
+
+\end{proof}
+
+In \eqref{eq:6}, take ${\lambda }_{n}={a}_{\xi }\left( n\right) {\chi }_{n}{\left( f\right) }^{4}W\left( \mathrm{N}n/L\right) $. The compact support of $W$ entails $\sum _{n} {\left| {\lambda }_{n}\right| }^{2}{\ll }_{W}L$; the column-length endpoint changes by only a fixed factor. Averaging over $f$ therefore gives
+
+\begin{equation}\label{eq:8}
+\mathcal{E}\left( h,L,F\right) \preccurlyeq G\left( h,L\right) ,\quad \quad 1\le L\le h\;\Longrightarrow \;\mathcal{E}\left( h,L,F\right) \preccurlyeq {h}^{7/6}.
+\end{equation}
+
+There are $O(F)$ admissible values of $f$. Summing the uniform bound over these values and dividing by $F$ gives \eqref{eq:8}.
+
+\section{Cubic completion and exact inversion}
+
+The theta estimate is available for a sum with additional cubic divisors. We first state precisely how that completed sum is related to the original one. The normalization $Y^{-1/2}$ is chosen so that its row mean square is exactly the energy in \eqref{eq:4} after averaging over $f$.
+
+For fixed $k$ and $f$ put
+
+\begin{equation}\label{eq:9}
+{P}_{k,f}\left( Y\right) ={Y}^{-1/2}\sum _{n\,\mathrm{sf}} {a}_{\xi }\left( n\right) {\chi }_{n}\left( k\right) {\chi }_{n}{\left( f\right) }^{4}W\left( \frac{\mathrm{N}n}{Y}\right) .
+\end{equation}
+
+Let
+
+\[
+{\Psi }_{k,f}\left( n\right) =\xi \left( n\right) {\chi }_{n}\left( k\right) {\chi }_{n}{\left( f\right) }^{4},\quad \quad {w}_{k,f}\left( b\right) ={\overline{\alpha \left( b\right) }}^{3}{\Psi }_{k,f}{\left( b\right) }^{3}.
+\]
+
+Extend $\Psi_{k,f}$ by zero at ideals not coprime to $S$. It is completely multiplicative in the ideal variable; for primary $b$ prime to $S$, $|w_{k,f}(b)|\le1$, and $b$ need not be squarefree.
+
+The weight $w_{k,f}$ is completely multiplicative, even though the column variable in $P_{k,f}$ is squarefree. This distinction allows the completion to run over all integral ideals $b$ prime to $S$. If $W$ is supported in $[u,v]$, then $P_{k,f}(Y)=0$ for $Y<1/v$, because a nonzero integral ideal has norm at least one. This also makes the completed divisor sums finite at each fixed scale. Define the cubic completion by
+
+\begin{equation}\label{eq:10}
+{T}_{k,f}\left( Y\right) =\sum _{b} \frac{{w}_{k,f}\left( b\right) }{\mathrm{N}b}{P}_{k,f}\left( \frac{Y}{{\left( \mathrm{N}b\right) }^{3}}\right) .
+\end{equation}
+
+The sum is finite for fixed $Y$. With ${V}_{*}(y)=\sqrt{y}W(y)$, definition \eqref{eq:10} agrees with \cite[equations (5.3)--(5.4)]{theta}. The completed mean-square bound \cite[Proposition 5.2]{theta} yields
+
+\begin{equation}\label{eq:11}
+\sum _{0<\mathrm{N}k\le h} {\left| {T}_{k,f}\left( Y\right) \right| }^{2}{\ll }_{\varepsilon }{D}^{\varepsilon }\Vert W{\Vert }_{{C}^{J}}^{2}\left( h+\frac{{h}^{2}\mathrm{N}f}{Y}\right) 
+\end{equation}
+
+for $1\le h,Y,\mathrm{N}f\le {D}^{{C}_{0}}$ and squarefree $f$ prime to $S$. Here $J=J(\varepsilon ,{C}_{0})$ is finite, and the implied constant is uniform for $W$ supported in $I$.
+
+Estimate \eqref{eq:11} is an analytic input from the cited work. We use its stated completed-sum form. The inversion and truncation below explain how to pass from it to the uncompleted energy without a transfer estimate.
+
+\begin{lemma}[Exact cubic inversion]
+
+For every $X>0$,
+
+\begin{equation}\label{eq:12}
+{P}_{k,f}\left( X\right) =\sum _{b} \frac{\mu \left( b\right) {w}_{k,f}\left( b\right) }{\mathrm{N}b}{T}_{k,f}\left( \frac{X}{{\left( \mathrm{N}b\right) }^{3}}\right) .
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+
+Substitute \eqref{eq:10} into the right side. For a fixed product $d=bc$, complete multiplicativity makes the coefficient of ${P}_{k,f}\left( X/{\left( \mathrm{N}d\right) }^{3}\right) $ equal to
+
+\[
+\frac{{w}_{k,f}\left( d\right) }{\mathrm{N}d}\sum _{b\mid d} \mu \left( b\right) =\left\{ \begin{aligned} 1, & d=1, \\ 0, & d\ne 1. \end{aligned}\right. 
+\]
+
+The identity follows by finite rearrangement. The extension of ${\Psi }_{k,f}$ by zero preserves complete multiplicativity, including at non-coprime arguments.
+
+\end{proof}
+
+\section{The one-cut estimate}
+
+The inverse sum contains terms at scales $X/(\mathrm{N}b)^3$. Small divisors $b$ correspond to large scales, where the completed theta estimate is effective. Large divisors correspond to scales below $h$; for those terms we expand the completion back out and use the large sieve for the original sums. Only one division of the divisor range is needed. The words short and long below refer to the divisor range, rather than to the resulting column length.
+
+\begin{proposition}[One-cut estimate]
+
+For $h,X,F\ge 1$ in the fixed polynomial ranges,
+
+\begin{equation}\label{eq:13}
+\mathcal{E}\left( h,X,F\right) \preccurlyeq XF+{h}^{7/6}.
+\end{equation}
+
+More precisely,
+
+\begin{equation}\label{eq:14}
+\mathcal{E}\left( h,X,F\right) \preccurlyeq F\min \{X,h\}+{h}^{7/6}.
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+
+For $X\le h$, assertion \eqref{eq:13} follows immediately from \eqref{eq:8}. Suppose $X>h$ and choose
+
+\[
+C={\left( X/h\right) }^{1/3}>1.
+\]
+
+This cutoff is determined by $X/C^3=h$. For every fixed pair $(k,f)$, it separates the terms of the inverse sum according to whether their scale is at least $h$ or below $h$.
+
+Split the inversion in \eqref{eq:12} into the terms with $\mathrm{N}b\le C$ and $\mathrm{N}b>C$, denoted by ${P}_{\mathrm{short}}$ and ${P}_{\mathrm{long}}$, respectively. By \eqref{eq:9} and \eqref{eq:4}, $\mathcal{E}\left( h,X,F\right) ={F}^{-1}\sum _{f,k} {\left| {P}_{k,f}\left( X\right) \right| }^{2}$.
+
+Short part. Weighted Cauchy--Schwarz and \eqref{eq:11} yield
+
+\begin{equation}\label{eq:15}
+\begin{gathered} \frac{1}{F}\sum _{f,k} {\left| {P}_{\mathrm{short}}\right| }^{2} \\ \quad \le \left( \sum _{\mathrm{N}b\le C} \frac{1}{\mathrm{N}b}\right) \sum _{\mathrm{N}b\le C} \frac{1}{\mathrm{N}b}\,\frac{1}{F}\sum _{f,k} {\left| {T}_{k,f}\left( \frac{X}{{\left( \mathrm{N}b\right) }^{3}}\right) \right| }^{2} \\ \quad \preccurlyeq h+\frac{{h}^{2}F{C}^{3}}{X}=h+hF\le 2XF. \end{gathered}
+\end{equation}
+
+Indeed $X/{\left( \mathrm{N}b\right) }^{3}\ge h\ge 1$, while $\sum _{\mathrm{N}b\le C} {\left( \mathrm{N}b\right) }^{-1}\ll \log \left( 2C\right) $ and $\sum _{\mathrm{N}b\le C} {\left( \mathrm{N}b\right) }^{2}\ll {C}^{3}$.
+
+The second term in the completed estimate contributes $h^2F(\mathrm{N}b)^3/X$ before multiplication by $1/\mathrm{N}b$. Its divisor sum is therefore bounded by $h^2FC^3/X=hF$. Since $F\ge1$, the total $h+hF$ is also at most $2hF$, giving the sharper form \eqref{eq:14} in this case. The harmonic divisor sum costs only logarithms, which are absorbed in $D^{\varepsilon}$.
+
+Long part. Expand \eqref{eq:10} and collect the total cubic factor $b$.
+
+Writing the outer inverse divisor as $d$ and the inner completion divisor as $c$, their product is $b=dc$. Complete multiplicativity replaces $w(d)w(c)$ by $w(b)$, while the condition $\mathrm{N}d>C$ remains inside the divisor coefficient. This is the source of $\beta_{k,f}(b)$ in the next display.
+
+\begin{equation}\label{eq:16}
+\begin{gathered} {P}_{\mathrm{long}}=\sum _{\mathrm{N}b>C} \frac{{\beta }_{k,f}\left( b\right) }{\mathrm{N}b}{P}_{k,f}\left( {L}_{b}\right) ,\quad \quad {L}_{b}=\frac{X}{{\left( \mathrm{N}b\right) }^{3}}<h, \\ {\beta }_{k,f}\left( b\right) ={w}_{k,f}\left( b\right) \sum _{\begin{gathered} d\mid b \\ \mathrm{N}d>C \end{gathered}} \mu \left( d\right) ,\quad \quad \left| {\beta }_{k,f}\left( b\right) \right| \le \tau \left( b\right) . \end{gathered}
+\end{equation}
+
+Write $\mathrm{supp}W\subset [u,v]$ with $0<u<v<\infty $. Nonzero terms satisfy $(\mathrm{N}b{)}^{3}\le vX$. Weighted Cauchy--Schwarz gives
+
+\begin{equation}\label{eq:17}
+\frac{1}{F}\sum _{f,k} {\left| {P}_{\mathrm{long}}\right| }^{2}\le {\left( \sum _{\mathrm{N}b\le {\left( vX\right) }^{1/3}} \frac{\tau \left( b\right) }{\mathrm{N}b}\right) }^{2}{\sup }_{{L}_{b}<h}\mathcal{E}\left( h,{L}_{b},F\right) \preccurlyeq {h}^{7/6}.
+\end{equation}
+
+The divisor sum is $O\left( {\log }^{2}\left( 2+X\right) \right) $. If ${L}_{b}\ge 1$, use \eqref{eq:8}; if ${L}_{b}<1$ and the support is nonempty, then ${L}_{b}\ge 1/v$, and there are only ${O}_{W}\left( 1\right) $ column indices. In that case the trivial bound $\mathcal{E}\left( h,{L}_{b},F\right) {\ll }_{W}h$ suffices. Finally, ${\left| {P}_{\mathrm{short}}+{P}_{\mathrm{long}}\right| }^{2}\le 2{\left| {P}_{\mathrm{short}}\right| }^{2}+2{\left| {P}_{\mathrm{long}}\right| }^{2}$ proves \eqref{eq:13}. The same two cases establish \eqref{eq:14}.
+
+\end{proof}
+
+The cancellation between completed copies is handled by exact inversion, before any absolute values are taken. The tail is then controlled at every smaller scale by the same large-sieve bound. There is no new estimate at a shorter scale that must be proved recursively.
+
+\section{A Hilbert-space truncation principle}
+
+The preceding argument uses two bounds: one for completed sums above the cutoff and one for original sums at every scale below it. The following lemma isolates this truncation step. Its Hilbert-space formulation keeps the averaging over rows inside a single norm.
+
+\begin{lemma}[Abstract one-cut truncation]
+
+Let $V$ be a Hilbert space, and suppose $P\left( Y\right) \in V$ vanishes for $Y<{y}_{0}$, with fixed ${y}_{0}>0$. Let ${R}_{b}$ be commuting linear contractions satisfying ${R}_{1}=I$ and ${R}_{b}{R}_{c}={R}_{bc}$, and suppose the sums below are finite at each scale. For fixed $m>0$, define $T\left( Y\right) =\sum _{b} \frac{{R}_{b}}{\mathrm{N}b}P\left( \frac{Y}{{\left( \mathrm{N}b\right) }^{m}}\right) .$ For $1\le U<X$, with empty suprema interpreted as zero,
+
+\begin{equation}\label{eq:18}
+\begin{gathered} \Vert P(X){\Vert }_{V}^{2}{\ll }_{m,{y}_{0}}{\log }^{4}(2+X) \\ \times ({\sup }_{U\le Y\le X}\Vert T(Y){\Vert }_{V}^{2}+{\sup }_{{y}_{0}\le Y<U}\Vert P(Y){\Vert }_{V}^{2}) \end{gathered}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+
+Möbius inversion gives
+
+\[
+P\left( X\right) =\sum _{b} \frac{\mu \left( b\right) {R}_{b}}{\mathrm{N}b}T\left( \frac{X}{{\left( \mathrm{N}b\right) }^{m}}\right) .
+\]
+
+Take $C=(X/U{)}^{1/m}$. The triangle inequality bounds the contribution from $\mathrm{N}b\le C$ by $\sum _{\mathrm{N}b\le C} (\mathrm{N}b{)}^{-1}$ times ${\sup }_{U\le Y\le X}\Vert T(Y){\Vert }_{V}$. Expanding $T$ in the remaining terms, the coefficient of $P(X/(\mathrm{N}d{)}^{m})$ is
+
+\[
+\frac{{R}_{d}}{\mathrm{N}d}\sum _{\begin{gathered} b\mid d \\ \mathrm{N}b>C \end{gathered}} \mu \left( b\right) ,\quad \quad \left| \sum _{\begin{gathered} b\mid d \\ \mathrm{N}b>C \end{gathered}} \mu \left( b\right) \right| \le \tau \left( d\right) .
+\]
+
+All resulting scales are less than $U$. By the vanishing assumption, the sum only ranges over $\mathrm{N}d\le {\left( X/{y}_{0}\right) }^{1/m}$. The divisor bound
+
+\[
+\sum _{\mathrm{N}d\le R} \frac{\tau \left( d\right) }{\mathrm{N}d}\le {\left( \sum _{\mathrm{N}b\le R} \frac{1}{\mathrm{N}b}\right) }^{2}\ll {\log }^{2}\left( 2R\right) 
+\]
+
+finishes the proof after squaring the triangle inequality.
+
+\end{proof}
+
+For the application, use the Hilbert space with coordinates $(k,f)$ and norm squared ${F}^{-1}\sum _{f,k} |{P}_{k,f}{|}^{2}$. The operators ${R}_{b}$ multiply coordinates by ${w}_{k,f}(b)$. Averaging \eqref{eq:11} over $f$ bounds the completed norm by ${D}^{\varepsilon }(h+{h}^{2}F/Y)$ for $Y\ge h$. If the short-scale estimate is
+
+\[
+{\sup }_{0<L\le h}\Vert P\left( L\right) {\Vert }_{V}^{2}\preccurlyeq {h}^{\kappa },
+\]
+
+then the cutoff $U=h$ yields
+
+\begin{equation}\label{eq:19}
+\mathcal{E}\left( h,X,F\right) \preccurlyeq F\min \{X,h\}+{h}^{\kappa }.
+\end{equation}
+
+The estimate must be uniform over the whole short-scale interval. Equation \eqref{eq:8} supplies this uniformity. The case $X\le h$ uses the short-scale estimate directly, and the case $X>h$ follows from the truncation lemma.
+
+For $\kappa \ge 1$, put ${H}_{0}={D}^{1+\alpha }$. In the Poisson ranges of Section 8, the condition $\kappa (1-\alpha )<1$ suffices for the required mean-square estimate. Sixth-power amplification gives the exponent
+
+\[
+\vartheta =\frac{1}{2}\left( 2+\alpha -\frac{1+\alpha }{6}\right) =\frac{11+5\alpha }{12}.
+\]
+
+To see the first condition, write $\Sigma=XF=D/B$ and $h\ll D^{1-\alpha}B^{-2}$, as in Section 8. Then
+
+\begin{equation}\label{eq:kappa-ratio}
+\frac{h^{\kappa}}{\Sigma}\ll D^{\kappa(1-\alpha)-1}B^{1-2\kappa}.
+\end{equation}
+
+Since $B\ge1$ and $\kappa\ge1$, the power of $B$ is nonpositive. The power of $D$ decreases when $\kappa(1-\alpha)<1$. On the other hand, the amplified exponent $\vartheta$ is less than one precisely when $\alpha<1/5$. Thus the admissible interval is
+
+\begin{equation}\label{eq:20}
+1-\frac{1}{\kappa}<\alpha<\frac{1}{5}.
+\end{equation}
+
+This interval is nonempty if and only if $1-1/\kappa<1/5$, equivalently $\kappa<5/4$.
+
+For $\kappa =7/6$, condition \eqref{eq:20} becomes $1/7<\alpha <1/5$. We fix $\alpha =3/20$.
+
+\section{Poisson reduction of the Möbius mean square}
+
+We now return to the Möbius sums whose cancellation will imply the zero-free region. Poisson summation turns their squared average into the dual family already estimated. Following the common factors through this calculation identifies the column length and the auxiliary twist range used in Section 8.
+
+For $D,H_0\ge1$, put
+
+\begin{equation}\label{eq:21}
+\begin{gathered}
+A_u(D)=\sum_n^*\mu(n)\nu(n)\chi_n(u)W(\mathrm{N}n/D), \\ \mathcal{M}_D=\frac{1}{D}\sum_{u\in\mathcal{O}}\Phi(\mathrm{N}u/H_0)|A_u(D)|^2.
+\end{gathered}
+\end{equation}
+
+Choose a nonnegative radial Schwartz function $\Phi$ with $\Phi(t)\ge1$ on $[0,1]$ and compactly supported radial Fourier transform. One can obtain such a function by taking the squared modulus of a radial band-limited Schwartz function that is nonzero near the origin, and then dilating and multiplying by a fixed constant. With $e(z)=\exp(4\pi i\operatorname{Im}z/\sqrt{3})$ and the self-dual measure $(2/\sqrt{3})\,dx\,dy$, the radial Fourier transform is
+
+\[
+\widehat{\Phi}(|w|^2)=\frac{2}{\sqrt{3}}\int_{\mathbb{C}}\Phi(|z|^2)e(-zw)\,dx\,dy.
+\]
+
+The factor $1/D$ in $\mathcal{M}_D$ is convenient for the dual calculation. Since $\Phi$ majorizes the indicator of the disk of norm $H_0$, a bound $\mathcal{M}_D\preccurlyeq H_0$ will imply $\sum_{0<\mathrm{N}u\le H_0}|A_u(D)|^2\preccurlyeq DH_0$.
+
+\subsection*{Expanding the square and summing the rows}
+
+Conjugate the inner sum before expanding its absolute square. Write $n_j=gz_j$, where $g=(n_1,n_2)$. Since the original indices are squarefree, $(z_1,z_2)=(z_1z_2,g)=1$. Multiplicativity gives
+
+\[
+\overline{\chi_{n_1}(u)}\chi_{n_2}(u)=1_{(u,g)=1}\eta(u),\qquad\eta=\overline{\chi_{z_1}}\chi_{z_2}.
+\]
+
+The character $\eta$ is primitive modulo $\mathfrak{m}=(z_1z_2)$. For the trivial modulus its Gauss sum and its value at zero are taken to be one. Inclusion--exclusion removes the restriction $(u,g)=1$. In the term indexed by $e\mid g$, set $u=e\ell$ and apply lattice Poisson summation in $\ell$. The result is
+
+\begin{equation}\label{eq:23}
+\begin{gathered}
+\sum_{u\in\mathcal{O}}\eta(u)1_{(u,g)=1}\Phi(\mathrm{N}u/H_0) \\ =\frac{H_0\gamma(\eta)}{\sqrt{\mathrm{N}\mathfrak{m}}}\sum_{e\mid g}\frac{\mu(e)\eta(e)}{\mathrm{N}e} \\ \qquad\times\sum_{h_1\in\mathcal{O}}\overline{\eta(h_1)}\widehat{\Phi}\left(\frac{H_0\mathrm{N}h_1}{\mathrm{N}e\,\mathrm{N}\mathfrak{m}}\right).
+\end{gathered}
+\end{equation}
+
+Here $\gamma(\eta)=(\mathrm{N}\mathfrak{m})^{-1/2}\sum_{x\;\mathrm{mod}\;\mathfrak{m}}\eta(x)e(x/\mathfrak{m})$, using the primary generator in the additive character. The substitution $u=e\ell$ changes the planar scale from $H_0$ to $H_0/\mathrm{N}e$. The finite Fourier transform of a primitive character contributes $\sqrt{\mathrm{N}\mathfrak{m}}\gamma(\eta)\overline{\eta(h_1)}$. These two factors give the normalization in \eqref{eq:23}.
+
+The zero frequency vanishes unless $z_1=z_2=1$, because a nonprincipal primitive character has sum zero. Its contribution is therefore
+
+\begin{equation}\label{eq:zero-frequency}
+\begin{gathered}
+Z=\frac{H_0}{D}\widehat{\Phi}(0)\sum_g^*|W(\mathrm{N}g/D)|^2 \\ \qquad\times\prod_{\mathfrak{p}\mid g}\left(1-\frac{1}{\mathrm{N}\mathfrak{p}}\right)\ll_{I,\Phi}H_0\|W\|_{\infty}^2.
+\end{gathered}
+\end{equation}
+
+There are $O_I(D)$ possible $g$ in the support of $W$, so this part already has the required size. In the remaining sum we retain every frequency $h_1\ne0$, including the terms with $z_1=z_2=1$.
+
+\subsection*{The Gauss factors and the first dual sum}
+
+The arithmetic identities in \cite[Lemma 4.1]{theta} explain why the coefficients $a_\xi$ were chosen. For coprime squarefree primary indices, they give
+
+\begin{equation}\label{eq:22}
+\begin{gathered}
+a_\xi(ab)=a_\xi(a)a_\xi(b)\chi_b(a)^4, \\ \mu(n)\gamma_{-1}(n)=\chi_n(-1)G(n)^{-1}\overline{\alpha(n)}\gamma_2(n).
+\end{gathered}
+\end{equation}
+
+The notation $\gamma_j$ means the Gauss sum in \eqref{eq:3} with $\chi_n^2$ replaced by $\chi_n^j$. The function $G$ has absolute value one and depends only on the class in the fixed group $\Gamma$. To see how the paired Gauss sum separates, let $\mathcal{R}$ be the reciprocity factor from the same lemma. The Chinese remainder theorem gives
+
+\[
+\begin{gathered}
+\gamma(\overline{\chi_{z_1}}\chi_{z_2})=\gamma_{-1}(z_1)\gamma_1(z_2) \\ \qquad\times\overline{\chi_{z_1}(z_2)}\chi_{z_2}(z_1),
+\end{gathered}
+\]
+
+and reciprocity identifies the last two factors with $\mathcal{R}(z_1,z_2)$. Using \eqref{eq:22} and $\mu(n)\gamma_1(n)=G(n)\alpha(n)\overline{\gamma_2(n)}$, the remaining finite factor is
+
+\[
+\chi_{z_1}(-1)\overline{G(z_1)}G(z_2)\mathcal{R}(z_1,z_2)=G(z_2z_1^{-1}).
+\]
+
+The quotient here is taken in $\Gamma$. Define $F_\Gamma(t)=\overline{\nu(t)}G(t^{-1})$ and expand this fixed function by finite character orthogonality:
+
+\begin{equation}\label{eq:ray-expansion}
+F_\Gamma(t)=\sum_\xi c_\xi\xi(t),\qquad c_\xi=\frac{1}{|\Gamma|}\sum_{t\in\Gamma}F_\Gamma(t)\overline{\xi(t)}.
+\end{equation}
+
+Taking $t=z_1z_2^{-1}$ now yields the separated paired identity
+
+\begin{equation}\label{eq:paired-gauss}
+\begin{gathered}
+\mu(z_1)\mu(z_2)\overline{\nu(z_1)}\nu(z_2)\gamma(\overline{\chi_{z_1}}\chi_{z_2}) \\ =\sum_\xi c_\xi a_\xi(z_1)\overline{a_\xi(z_2)}.
+\end{gathered}
+\end{equation}
+
+Thus the arithmetic dependence on the two columns has become a finite sum of a coefficient in the first column times the conjugate coefficient in the second. The number and size of the $c_\xi$ are fixed independently of $D$.
+
+Put $W_0(x)=x^{-1/2}\overline{W(x)}$. The reason for the conjugate and square-root factor is the identity
+
+\begin{equation}\label{eq:weight-normalization}
+\begin{gathered}
+W_0(\mathrm{N}(gz_1)/D)\overline{W_0(\mathrm{N}(gz_2)/D)} \\ =\frac{D}{\mathrm{N}g\sqrt{\mathrm{N}z_1\mathrm{N}z_2}}\overline{W(\mathrm{N}(gz_1)/D)}W(\mathrm{N}(gz_2)/D).
+\end{gathered}
+\end{equation}
+
+Combine \eqref{eq:23} and \eqref{eq:paired-gauss} with the factor $1/D$ in \eqref{eq:21}. Since $\overline{\chi_z(e)}=\chi_z(e^5)$, this gives $\mathcal{M}_D-Z=\sum_\xi c_\xi\mathcal{S}_\xi$, where
+
+\begin{equation}\label{eq:first-dual}
+\begin{gathered}
+\mathcal{S}_\xi=\frac{H_0}{D^2}\sum_g^*\sum_{e\mid g}\frac{\mu(e)\mathrm{N}g}{\mathrm{N}e}\sum_{h_1\ne0} \\ \quad\times\sum_{\substack{z_1,z_2\;\mathrm{squarefree}\\(z_1,z_2)=(z_1z_2,g)=1}}^*a_\xi(z_1)\overline{a_\xi(z_2)} \\ \quad\times\chi_{z_1}(h_1e^5)\overline{\chi_{z_2}(h_1e^5)} \\ \quad\times W_0(\mathrm{N}(gz_1)/D)\overline{W_0(\mathrm{N}(gz_2)/D)} \\ \quad\times\widehat{\Phi}\left(\frac{H_0\mathrm{N}h_1}{\mathrm{N}e\,\mathrm{N}z_1\mathrm{N}z_2}\right).
+\end{gathered}
+\end{equation}
+
+Thus \eqref{eq:weight-normalization} accounts for the full factor $\mathrm{N}g/\mathrm{N}e$ in this formula.
+
+\subsection*{Combining the common factors}
+
+The condition $(z_1,z_2)=1$ couples the two columns and prevents a direct use of the energy. Remove it by Möbius inversion:
+
+\[
+1_{(z_1,z_2)=1}=\sum_{v\mid z_1,\;v\mid z_2}\mu(v),\qquad z_j=vm_j.
+\]
+
+Then $(g,v)=1$, and the first identity in \eqref{eq:22} gives $a_\xi(vm)=a_\xi(v)a_\xi(m)\chi_m(v)^4$. The factor common to the two columns has squared absolute value
+
+\[
+|a_\xi(v)\chi_v(h_1e^5)|^2=1_{(v,h_1)=1},
+\]
+
+because $(v,e)=1$. The remaining $m_j$ are no longer required to be coprime to each other. Written before the final substitution, the sum is
+
+\begin{equation}\label{eq:common-dual}
+\begin{gathered}
+\mathcal{S}_\xi=\frac{H_0}{D^2}\sum_{\substack{g,v\\(g,v)=1}}^*\sum_{e\mid g}\frac{\mu(e)\mu(v)\mathrm{N}g}{\mathrm{N}e} \\ \quad\times\sum_{\substack{h_1\ne0\\(h_1,v)=1}}\sum_{\substack{m_1,m_2\\(m_1m_2,gv)=1}}^*a_\xi(m_1)\overline{a_\xi(m_2)} \\ \quad\times\chi_{m_1}(h_1e^5v^4)\overline{\chi_{m_2}(h_1e^5v^4)} \\ \quad\times W_0(\mathrm{N}(gvm_1)/D)\overline{W_0(\mathrm{N}(gvm_2)/D)} \\ \quad\times\widehat{\Phi}\left(\frac{H_0\mathrm{N}h_1}{\mathrm{N}e(\mathrm{N}v)^2\mathrm{N}m_1\mathrm{N}m_2}\right).
+\end{gathered}
+\end{equation}
+
+The substitution below has two purposes: it combines $gv$ in the column length, and it turns $h_1e^5v^4$ into a row frequency times a fourth-power twist. Those are exactly the two forms occurring in the dual energy. Set
+
+\begin{equation}\label{eq:change-variables}
+b=g/e,\qquad f=ev,\qquad k=eh_1.
+\end{equation}
+
+This substitution is bijective. Indeed, $f$ is squarefree, $(e,v)=1$, and $(h_1,v)=1$, so $(f,k)=e$ as ideals. Conversely, from squarefree coprime $b,f$ and arbitrary $k\ne0$, recover
+
+\[
+e=(f,k),\qquad v=f/e,\qquad g=be,\qquad h_1=k/e.
+\]
+
+Since $(b,f)=1$, the recovered $g=be$ is squarefree and coprime to $v$. The definition $e=(f,k)$ also gives $(h_1,v)=1$. Thus the recovered indices satisfy all original restrictions. The identities needed in the summand are
+
+\begin{equation}\label{eq:change-identities}
+\begin{gathered}
+gv=bf,\qquad h_1e^5v^4=kf^4,\qquad\mu(e)\mu(v)=\mu(f), \\ \frac{\mathrm{N}g}{\mathrm{N}e}=\mathrm{N}b,\qquad\frac{\mathrm{N}h_1}{\mathrm{N}e(\mathrm{N}v)^2}=\frac{\mathrm{N}k}{(\mathrm{N}f)^2}.
+\end{gathered}
+\end{equation}
+
+The characters $\chi_{m_j}(f)^4$ already vanish unless $(m_j,f)=1$, so the remaining exclusion need only involve $b$. We obtain
+
+\begin{equation}\label{eq:24}
+\begin{gathered}
+\mathcal{S}_\xi=\frac{H_0}{D^2}\sum_{\substack{b,f\\(b,f)=1}}^*\mu(f)\mathrm{N}b\sum_{k\ne0} \\ \quad\times\sum_{\substack{m_1,m_2\\(m_1m_2,b)=1}}^*a_\xi(m_1)\overline{a_\xi(m_2)} \\ \quad\times\chi_{m_1}(kf^4)\overline{\chi_{m_2}(kf^4)} \\ \quad\times W_0(\mathrm{N}(bfm_1)/D)\overline{W_0(\mathrm{N}(bfm_2)/D)} \\ \quad\times\widehat{\Phi}\left(\frac{H_0\mathrm{N}k}{(\mathrm{N}f)^2\mathrm{N}m_1\mathrm{N}m_2}\right).
+\end{gathered}
+\end{equation}
+
+This is an exact identity for every positive $H_0$. In the next section we estimate it directly with uniform smooth norms and choose $H_0=D^{23/20}$.
+
+\section{Common factors and coupled smooth weights}
+
+The two columns in \eqref{eq:24} have the same arithmetic coefficients as the energy, but two points remain to be addressed. Each column is required to be coprime to $b$, and the Fourier weight depends on both column norms at once. We handle the exclusion by inclusion--exclusion and the smooth coupling by a Fourier-series lemma.
+
+\subsection*{The scales of a dyadic block}
+
+Write $\operatorname{supp}W\subset[a_0,b_0]$ with $a_0>0$, and $\operatorname{supp}\widehat{\Phi}\subset[0,C_\Phi]$. Since nonzero column ideals have norm at least one, the support in \eqref{eq:24} implies
+
+\begin{equation}\label{eq:support-ranges}
+\mathrm{N}b\,\mathrm{N}f\le b_0D,\qquad 0<\mathrm{N}k\le\frac{C_\Phi b_0^2D^2}{H_0(\mathrm{N}b)^2}.
+\end{equation}
+
+Partition the $b$ and $f$ sums into ranges $B\le\mathrm{N}b<2B$ and $F\le\mathrm{N}f<2F$, where $B,F$ are powers of two. In each block put
+
+\begin{equation}\label{eq:25}
+X=\frac{D}{BF},\qquad h=\frac{CD^2}{H_0B^2},\qquad\Sigma=XF=\frac{D}{B},
+\end{equation}
+
+with $C=\max(2,C_\Phi b_0^2)$. Thus every nonzero row lies in $0<\mathrm{N}k\le h$. If $h<1$, the block is empty. The inequality $BF\ll_I D$ ensures that all scales and the divisor substitutions below stay in fixed polynomial ranges.
+
+\subsection*{Removing the exclusion in each column}
+
+For a common test function $U$, define the restricted column sum
+
+\begin{equation}\label{eq:restricted-column}
+S_U(b,f,k)=\sum_{\substack{n\\(n,b)=1}}^*a_\xi(n)\chi_n(k)\chi_n(f)^4U(\mathrm{N}n/X).
+\end{equation}
+
+Let $\mathcal{E}_{(b)}$ denote the energy \eqref{eq:4} with this additional restriction. Inclusion--exclusion followed by $n=dm$ gives the identity
+
+\begin{equation}\label{eq:column-exclusion-identity}
+\begin{gathered}
+S_U(b,f,k)=\sum_{d\mid b}\mu(d)a_\xi(d)\chi_d(k)\chi_d(f)^4 \\ \quad\times\sum_m^*a_\xi(m)\chi_m(k)\chi_m(df)^4U\left(\frac{\mathrm{N}m}{X/\mathrm{N}d}\right).
+\end{gathered}
+\end{equation}
+
+In deriving this formula, the factor $\chi_m(d)^4$ from \eqref{eq:22} enforces $(m,d)=1$. Terms with $(d,f)\ne1$ have $\chi_d(f)=0$. In the other terms $df$ is squarefree, and the map $f\mapsto df$ is injective into the range $F\mathrm{N}d\le\mathrm{N}(df)<2F\mathrm{N}d$. Cauchy--Schwarz in the finitely many divisors $d$ therefore proves
+
+\begin{equation}\label{eq:26}
+\mathcal{E}_{(b)}(h,X,F;\xi,U)\le\tau(b)\sum_{d\mid b}\mathcal{E}(h,X/\mathrm{N}d,F\mathrm{N}d;\xi,U).
+\end{equation}
+
+No factor of $\mathrm{N}d$ is lost in the normalization: $(X/\mathrm{N}d)(F\mathrm{N}d)=XF=\Sigma$. This preservation of the product is the reason that removing the exclusion is harmless for the desired energy bound.
+
+\subsection*{A smooth-weight separation lemma}
+
+A mean-square estimate for a common one-variable weight does not immediately apply to a weight coupling two columns and depending on the row. The following elementary lemma makes that passage explicit. For a smooth function, the $C^q$ norm below is the maximum of the absolute values of its partial derivatives of total order at most $q$.
+
+\begin{lemma}[Separation of row-dependent kernels]
+
+Let $I\subset\operatorname{int}I_*$ be fixed compact intervals in $(0,\infty)$, and let $J\ge0$ be an integer. For each row $r$ in a finite set, let $S_r(U)=\sum_n A_r(n)U(x_{r,n})$ be a finite sum with $x_{r,n}>0$. Suppose that for every $U\in C_c^\infty(I_*)$,
+
+\begin{equation}\label{eq:kernel-hypothesis}
+\sum_r|S_r(U)|^2\le M\|U\|_{C^J(I_*)}^2.
+\end{equation}
+
+If $|d_r|\le1$ and the smooth kernels $K_r$ are supported in $I^2$, then
+
+\begin{equation}\label{eq:kernel-conclusion}
+\begin{gathered}
+\left|\sum_r d_r\sum_{n_1,n_2}A_r(n_1)\overline{A_r(n_2)}K_r(x_{r,n_1},x_{r,n_2})\right| \\ \ll_{I,I_*,J}M\sup_r\|K_r\|_{C^{2J+4}(I^2)}.
+\end{gathered}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+
+Choose a real function $\eta\in C_c^\infty(I_*)$ equal to one on $I$. Choose a period $T$ and a fundamental interval containing $I_*$ in its interior. Extend each $K_r$ by zero to that square and then periodically. Set $U_p(x)=\eta(x)\exp(2\pi ipx/T)$ for $p\in\mathbb{Z}$. Fourier expansion, multiplied by $\eta(x)\eta(y)$, gives
+
+\begin{equation}\label{eq:kernel-fourier}
+K_r(x,y)=\sum_{p,q\in\mathbb{Z}}c_{p,q}(r)U_p(x)\overline{U_q(y)}.
+\end{equation}
+
+Integrating by parts $J+2$ times in each variable gives a bound uniform in the row:
+
+\begin{equation}\label{eq:kernel-coefficients}
+\begin{gathered}
+\sup_r|c_{p,q}(r)|\ll K_*(1+|p|)^{-J-2}(1+|q|)^{-J-2}, \\ K_*=\sup_r\|K_r\|_{C^{2J+4}(I^2)}.
+\end{gathered}
+\end{equation}
+
+For zero frequencies no integration by parts is needed in that variable. The compact support removes boundary terms, and $\|U_p\|_{C^J(I_*)}\ll(1+|p|)^J$. For a fixed pair $p,q$, take the common coefficient bound before applying Cauchy--Schwarz in the rows. By \eqref{eq:kernel-hypothesis},
+
+\begin{equation}\label{eq:kernel-cauchy}
+\begin{gathered}
+\left|\sum_r d_rc_{p,q}(r)S_r(U_p)\overline{S_r(U_q)}\right| \\ \le\sup_r|c_{p,q}(r)|\left(\sum_r|S_r(U_p)|^2\right)^{1/2}\left(\sum_r|S_r(U_q)|^2\right)^{1/2} \\ \ll MK_*(1+|p|)^{-2}(1+|q|)^{-2}.
+\end{gathered}
+\end{equation}
+
+The last expression is summable over both integer frequencies. Hence the Fourier expansion may be summed absolutely after the row estimate, and it proves \eqref{eq:kernel-conclusion}.
+
+\end{proof}
+
+\subsection*{Applying the lemma and choosing the parameter}
+
+In a fixed block put $x_j=\mathrm{N}m_j/X$ and define the real parameters
+
+\begin{equation}\label{eq:kernel-scales}
+\rho_{b,f}=\frac{\mathrm{N}(bf)}{BF}\in[1,4),\qquad a_{f,k}=\frac{H_0\mathrm{N}k}{(\mathrm{N}f)^2X^2}\le C.
+\end{equation}
+
+The coupled weight in \eqref{eq:24} is exactly
+
+\begin{equation}\label{eq:actual-kernel}
+\begin{gathered}
+K_{b,f,k}(x_1,x_2)=W_0(\rho_{b,f}x_1)\overline{W_0(\rho_{b,f}x_2)} \\ \qquad\times\widehat{\Phi}(a_{f,k}/(x_1x_2)).
+\end{gathered}
+\end{equation}
+
+Its support is contained in $I_0^2$, where $I_0=[a_0/4,b_0]$. Since $x_1,x_2$ stay away from zero, $\rho_{b,f}<4$, and $a_{f,k}\le C$, the chain and product rules give, for every fixed $q$,
+
+\begin{equation}\label{eq:kernel-uniform}
+\sup_{b,f,k}\|K_{b,f,k}\|_{C^q(I_0^2)}\ll_{I,\Phi,q}\|W\|_{C^q(I)}^2.
+\end{equation}
+
+The constants do not grow with $H_0$, $D$, or the row indices. Choose $I_*=[a_0/8,2b_0]$ for the common test functions in Lemma 8.1.
+
+Take $H_0=D^{23/20}$, corresponding to $\alpha=3/20$. The short-scale term in the one-cut estimate is smaller than the target because
+
+\begin{equation}\label{eq:27}
+\begin{gathered}
+\frac{h^{7/6}}{\Sigma}=C^{7/6}D^{(17/20)(7/6)-1}B^{1-7/3} \\ =C^{7/6}D^{-1/120}B^{-4/3}\le1\qquad(D\;\text{sufficiently large}).
+\end{gathered}
+\end{equation}
+
+The bounded range of smaller $D$ is covered by enlarging the implied constant. The same comparison holds after every substitution in \eqref{eq:26}, since $h$ and $\Sigma$ do not change. For scales $X/\mathrm{N}d\ge1$, Proposition 5.1 gives $\mathcal{E}\preccurlyeq\Sigma$. If $X/\mathrm{N}d<1$ and the support is nonempty, that scale is bounded below by a positive support constant; only a bounded number of columns occur, and the trivial estimate $\mathcal{E}\ll_U h\le h^{7/6}\ll\Sigma$ suffices.
+
+Consequently \eqref{eq:26} and the divisor bound $\tau(b)\ll_\varepsilon D^{\varepsilon}$ give, uniformly for every common test function $U$ supported in $I_*$,
+
+\begin{equation}\label{eq:restricted-energy}
+\begin{gathered}
+\sum_{f,k}|S_U(b,f,k)|^2=\Sigma\mathcal{E}_{(b)}(h,X,F;\xi,U) \\ \ll_\varepsilon D^{\varepsilon}\Sigma^2\|U\|_{C^J(I_*)}^2.
+\end{gathered}
+\end{equation}
+
+Apply Lemma 8.1 with rows $(f,k)$, coefficients $A_{f,k}(n)=1_{(n,b)=1}a_\xi(n)\chi_n(k)\chi_n(f)^4$, and row multiplier $d_{f,k}=\mu(f)1_{(f,b)=1}$. The row range is $F\le\mathrm{N}f<2F$ and $0<\mathrm{N}k\le h$. Enlarging to this full range adds only rows on which the original kernel vanishes. By \eqref{eq:kernel-uniform} and \eqref{eq:restricted-energy}, the quadratic sum for each fixed $b$ is bounded by $D^{\varepsilon}\Sigma^2\|W\|_{C^{2J+4}(I)}^2$.
+
+There are $O(B)$ possible $b$ in the block, each with $\mathrm{N}b<2B$. Restoring its prefactor in \eqref{eq:24} gives
+
+\begin{equation}\label{eq:block-bound}
+\begin{gathered}
+|\mathcal{S}_{\xi;B,F}|\ll_\varepsilon D^{\varepsilon}\|W\|_{C^{2J+4}(I)}^2\frac{H_0B}{D^2}\,B\,\Sigma^2 \\ =D^{\varepsilon}\|W\|_{C^{2J+4}(I)}^2H_0,\qquad\Sigma=D/B.
+\end{gathered}
+\end{equation}
+
+There are only $O((\log D)^2)$ nonempty blocks. Sum them, sum over the fixed finite set of $\xi$, and include the zero-frequency bound \eqref{eq:zero-frequency}. We obtain $\mathcal{M}_D\preccurlyeq H_0$. Undoing the normalization $1/D$ in \eqref{eq:21} proves
+
+\begin{equation}\label{eq:28}
+\sum_{0<\mathrm{N}u\le D^{23/20}}|A_u(D)|^2\ll_\varepsilon D^{43/20+\varepsilon}.
+\end{equation}
+
+This completes the Poisson reduction in the parameter range used here. The loss is controlled by a fixed finite smooth norm of $W$, uniformly over all the blocks.
+
+\section{Sixth-power amplification}
+
+The mean square \eqref{eq:28} controls an average over the row $u$. To extract an untwisted Möbius sum, use the rows that are sixth powers. For such a row the sextic character is one whenever the column is coprime to its base. Averaging over many sixth powers therefore produces a positive arithmetic weight in the column and allows Cauchy--Schwarz to use the mean-square bound.
+
+Set
+
+\[
+Y={D}^{23/120},\quad \quad {Y}^{6}={D}^{23/20}.
+\]
+
+As ${\chi }_{n}\left( {b}^{6}\right) ={1}_{\left( b,n\right) =1}$, summing over all nonzero Eisenstein integers with $\mathrm{N}b\le Y$ gives
+
+\begin{equation}\label{eq:29}
+\sum _{0<\mathrm{N}b\le Y} {A}_{{b}^{6}}\left( D\right) =\sum _{n\,\mathrm{sf}} \mu \left( n\right) \nu \left( n\right) W\left( \frac{\mathrm{N}n}{D}\right) \mathrm{card}\{b:0<\mathrm{N}b\le Y,\;\left( b,n\right) =1\}.
+\end{equation}
+
+A fundamental parallelogram of $\mathcal{O}$ has area $\sqrt{3}/2$. A disk defined by $\mathrm{N}b\le Y$ has area $\pi Y$, so its leading lattice count is $(2\pi/\sqrt{3})Y$. Restricting to multiples of $d$ divides the area by $\mathrm{N}d$; counting the boundary cells gives the square-root error.
+
+The Eisenstein lattice has the elementary counting estimate
+
+\[
+\mathrm{card}\{b:0<\mathrm{N}b\le Y,\;d\mid b\}={c}_{K}\frac{Y}{\mathrm{N}d}+O\left( \sqrt{\frac{Y}{\mathrm{N}d}}+1\right) ,\quad \quad {c}_{K}=\frac{2\pi }{\sqrt{3}}.
+\]
+
+Inclusion--exclusion over the squarefree divisors of $n$ therefore yields
+
+\begin{equation}\label{eq:30}
+\begin{gathered} \mathrm{card}\{b:0<\mathrm{N}b\le Y,\;\left( b,n\right) =1\}={c}_{K}Yw\left( n\right) +O\left( {Y}^{1/2}\tau \left( n\right) \right) , \\ w\left( n\right) =\prod _{\mathfrak{p}\mid n} \left( 1-\frac{1}{\mathrm{N}\mathfrak{p}}\right) . \end{gathered}
+\end{equation}
+
+Define the weighted Möbius sum
+
+\[
+{M}_{W}\left( D\right) =\sum _{n\,\mathrm{sf}} \mu \left( n\right) \nu \left( n\right) w\left( n\right) W\left( \frac{\mathrm{N}n}{D}\right) .
+\]
+
+Since $\sum _{\mathrm{N}n\asymp D} \tau \left( n\right) {\ll }_{\varepsilon }{D}^{1+\varepsilon }$, equations \eqref{eq:29}--\eqref{eq:30} imply
+
+\begin{equation}\label{eq:31}
+\sum _{0<\mathrm{N}b\le Y} {A}_{{b}^{6}}\left( D\right) ={c}_{K}Y{M}_{W}\left( D\right) +{O}_{\varepsilon }\left( {D}^{1+\varepsilon }{Y}^{1/2}\right) .
+\end{equation}
+
+The factor $Y$ is the number of lattice points available for the sixth-power average. Cauchy--Schwarz costs only its square root. On the other hand, if $\mathrm{N}b\le Y$, then $\mathrm{N}(b^6)\le Y^6=D^{23/20}$, so all these rows are covered by \eqref{eq:28}.
+
+Each value of ${b}^{6}$ has at most six preimages. By Cauchy--Schwarz and \eqref{eq:28},
+
+\[
+{\left| \sum _{0<\mathrm{N}b\le Y} {A}_{{b}^{6}}\left( D\right) \right| }^{2}\ll Y\sum _{0<\mathrm{N}u\le {Y}^{6}} {\left| {A}_{u}\left( D\right) \right| }^{2}{\ll }_{\varepsilon }Y{D}^{43/20+\varepsilon }.
+\]
+
+We now divide \eqref{eq:31} by $Y$ and use the amplified mean-square bound.
+
+Taking the square root of the Cauchy--Schwarz bound gives $D^{43/40+\varepsilon}Y^{1/2}$. Division by $Y$ leaves the main term $D^{43/40+\varepsilon}Y^{-1/2}$, while the lattice-counting error contributes $D^{1+\varepsilon}Y^{-1/2}$. Since $Y=D^{23/120}$, their exponents are
+
+\begin{equation}\label{eq:exponent-account}
+\begin{gathered}
+\frac{43}{40}-\frac{23}{240}=\frac{258-23}{240}=\frac{235}{240}=\frac{47}{48}, \\ 1-\frac{23}{240}=\frac{217}{240}<\frac{235}{240}.
+\end{gathered}
+\end{equation}
+
+The second line is the exponent of the lattice-counting error after the same division by $Y$. Thus that error is smaller than the main bound, and the resulting estimate is
+
+\begin{equation}\label{eq:32}
+\begin{gathered} \left| {M}_{W}\left( D\right) \right| {\ll }_{\varepsilon }{D}^{43/40+\varepsilon }{Y}^{-1/2}+{D}^{1+\varepsilon }{Y}^{-1/2} \\ {\ll }_{\varepsilon }{D}^{47/48+\varepsilon }+{D}^{217/240+\varepsilon }{\ll }_{\varepsilon }{D}^{47/48+\varepsilon }. \end{gathered}
+\end{equation}
+
+\section{Euler factors and Dirichlet L-functions}
+
+The last step converts cancellation of the weighted Möbius sums into the absence of zeros. For $\Re s>1$, the Möbius coefficients generate a reciprocal $L$-function. The extra positive weight from Section 9 modifies this reciprocal by an Euler product that is analytic and nonzero for $\Re s>0$. The bound \eqref{eq:32} then continues the reciprocal, tested against a smooth weight, to $\Re s>47/48$.
+
+Let ${L}_{K}^{S}\left( s,\nu \right) $ be the Hecke $L$-function with the Euler factors at primes of $S$ deleted. For $\Re s>1$, the Euler product gives
+
+\begin{equation}\label{eq:33}
+\sum _{n\,\mathrm{sf}} \frac{\mu \left( n\right) \nu \left( n\right) w\left( n\right) }{{\left( \mathrm{N}n\right) }^{s}}=\frac{{G}_{\nu }\left( s\right) }{{L}_{K}^{S}\left( s,\nu \right) },
+\end{equation}
+
+where, writing $Q=\mathrm{N}\mathfrak{p}$,
+
+\begin{equation}\label{eq:34}
+{G}_{\nu }\left( s\right) =\prod _{\mathfrak{p}\notin S} \frac{1-\nu \left( \mathfrak{p}\right) \left( 1-{Q}^{-1}\right) {Q}^{-s}}{1-\nu \left( \mathfrak{p}\right) {Q}^{-s}}.
+\end{equation}
+
+The factors in \eqref{eq:34} are nonzero for $\Re s>0$. On $\Re s\ge {\sigma }_{0}>0$, each factor is $1+{O}_{{\sigma }_{0}}\left( {Q}^{-1-{\sigma }_{0}}\right) $, and the sum of the error terms over prime ideals converges. Hence ${G}_{\nu }$ is holomorphic and nonvanishing in $\Re s>0$.
+
+Write $\widehat{W}\left( s\right) =\int _{0}^{\infty } W\left( y\right) {y}^{s}\,dy/y$. By \eqref{eq:32}, the Mellin integral
+
+\begin{equation}\label{eq:35}
+{I}_{W}\left( s\right) =\int _{0}^{\infty } {M}_{W}\left( D\right) {D}^{-s}\,\frac{dD}{D}
+\end{equation}
+
+is holomorphic for $\Re s>47/48$: for a compact subset of that half-plane, choose $\varepsilon $ smaller than its distance from the boundary. For sufficiently small $D$, ${M}_{W}\left( D\right) =0$ because $W$ has compact support and $\mathrm{N}n\ge 1$. On $\Re s>1$ absolute convergence permits interchange of the sum and integral, yielding
+
+\[
+{I}_{W}\left( s\right) =\widehat{W}\left( s\right) \frac{{G}_{\nu }\left( s\right) }{{L}_{K}^{S}\left( s,\nu \right) }.
+\]
+
+By analytic continuation,
+
+\begin{equation}\label{eq:36}
+{L}_{K}^{S}\left( s,\nu \right) {I}_{W}\left( s\right) =\widehat{W}\left( s\right) {G}_{\nu }\left( s\right) 
+\end{equation}
+
+on $\Re s>47/48$, interpreted meromorphically at a possible principal-character pole. If $\rho $ were a zero of ${L}_{K}^{S}$ in this half-plane, choose any nonzero nonnegative $\psi \in {C}_{c}^{\infty }\left( 0,\infty \right) $ and set $W\left( y\right) ={y}^{-\rho }\psi \left( y\right) $. Then
+
+\[
+\widehat{W}\left( \rho \right) =\int _{0}^{\infty } \psi \left( y\right) \,\frac{dy}{y}>0,
+\]
+
+contradicting \eqref{eq:36}, since ${G}_{\nu }\left( \rho \right) \ne 0$. The finitely many deleted Euler factors are nonzero on $\Re s>0$, and consequently
+
+\begin{equation}\label{eq:37}
+{L}_{K}\left( s,\nu \right) \ne 0\quad \quad \left( \Re s>47/48\right) ,
+\end{equation}
+
+with the usual interpretation of the pole at $s=1$ for the principal character.
+
+Finally, let $\chi $ be any Dirichlet character and let ${\chi }_{-3}$ denote the nonprincipal quadratic character modulo $3$. For the norm pullback $\nu =\chi \circ \mathrm{N}$, comparison of Euler factors gives
+
+\begin{equation}\label{eq:38}
+{L}_{K}\left( s,\chi \circ \mathrm{N}\right) =L\left( s,\chi \right) L\left( s,\chi {\chi }_{-3}\right) ,
+\end{equation}
+
+up to finitely many nonvanishing Euler factors when induced rather than primitive characters are used. A split rational prime contributes two linear factors, and at an inert prime the factorization is
+
+\[
+{\left( 1-\chi {\left( p\right) }^{2}{p}^{-2s}\right) }^{-1}={\left( 1-\chi \left( p\right) {p}^{-s}\right) }^{-1}{\left( 1+\chi \left( p\right) {p}^{-s}\right) }^{-1}.
+\]
+
+The ramified prime $3$ contributes one factor, and \eqref{eq:38} extends meromorphically. If $\rho \ne 1$ were a zero of $L(s,\chi )$ in the stated half-plane, then $L(s,\chi {\chi }_{-3})$ would have no pole at $\rho $. Equation \eqref{eq:38} would therefore contradict \eqref{eq:37}. At $s=1$, the same argument applies unless the primitive character inducing $\chi $ is principal or ${\chi }_{-3}$. The principal $L$-function has a pole, and the quadratic case satisfies
+
+\[
+L\left( 1,{\chi }_{-3}\right) =\sum _{m\ge 0} \left( \frac{1}{3m+1}-\frac{1}{3m+2}\right) >0.
+\]
+
+The finitely many Euler factors associated with imprimitive characters are nonzero for $\Re s>0$. This proves Theorem 1.1 for every Dirichlet character. The boundary is independent of conductor and height; the auxiliary implied constants may depend on the fixed character. In particular, there are no Siegel zeros: an exceptional real zero of a Dirichlet $L$-function would lie in the half-plane excluded above.
+\begin{thebibliography}{3}
+\bibitem{theta}
+OpenAI, ``The quasi-Riemann hypothesis,'' OpenAI Math Release preprint,
+Oct. 5, 2026. [Online]. Available:
+\url{https://github.com/openai/math/blob/main/preprints/The-Quasi-Riemann-Hypothesis-October-5-2026/paper2.pdf}.
+Accessed: Nov. 16, 2026.
+\bibitem{kintali}
+S. Kintali, ``A short proof of the quasi-Riemann hypothesis,'' preprint,
+Oct. 7, 2026. [Online]. Available:
+\url{https://shivakintali.github.io/papers/QRH.pdf}.
+Accessed: Nov. 16, 2026.
+\bibitem{defaveri}
+A. de Faveri, ``Optimal large sieve for fixed order characters,''
+arXiv:2610.04045v1 [math.NT], Oct. 2, 2026.
+doi: \href{https://doi.org/10.48550/arXiv.2610.04045}{10.48550/arXiv.2610.04045}.
+\end{thebibliography}
+\end{document}

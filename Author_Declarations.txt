@@ -1,0 +1,25 @@
+Author declarations
+Manuscript: A one-cut large-sieve proof of a quasi-Riemann zero-free region
+Author: Yuwen Wang
+Corresponding author: 3010317@proton.me
+
+Research ethics
+Not applicable.
+
+Informed consent
+Not applicable.
+
+Author contributions
+The author has accepted responsibility for the entire content of this manuscript and approved its submission.
+
+Use of Large Language Models, AI and Machine Learning Tools
+OpenAI Codex was used for English language editing, manuscript formatting and typesetting, checking the author's reasoning and references and citations, and performing part of the computations, including the exact Möbius inversion that resolves the cancellation before absolute values are taken. The author is responsible for the mathematical arguments, computations, and final text of the manuscript.
+
+Conflict of interest
+The author states no conflict of interest.
+
+Research funding
+None declared.
+
+Data availability
+Not applicable.
